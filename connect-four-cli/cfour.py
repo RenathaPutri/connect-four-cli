@@ -1,11 +1,23 @@
+"""
+This file contains code for the game "Connect Four CLI".
+
+Authors:
+1. Renatha Putri
+2. SoftwareApkDev
+"""
+
+
+# Importing necessary libraries
+
+
 import json
+import os
 import random
 import time
 import google.generativeai as genai
 from colorama import Fore, Style
+from dotenv import load_dotenv
 
-# Configure Gemini AI API Key
-genai.configure(api_key="")
 
 def print_instructions():
     print(Fore.GREEN + "\nWelcome to Connect Four! 🎮")
@@ -60,13 +72,13 @@ def suggest_move(board):
 
 def save_score(result):
     try:
-        with open("scores.json", "r") as file:
+        with open("../scores.json", "r") as file:
             scores = json.load(file)
     except FileNotFoundError:
         scores = {"wins": 0, "losses": 0, "ties": 0}
     
     scores[result] += 1
-    with open("scores.json", "w") as file:
+    with open("../scores.json", "w") as file:
         json.dump(scores, file)
 
 def play_game():
@@ -120,6 +132,11 @@ def play_game():
 
 def main():
     print("Welcome to Connect Four!")
+
+    # Configure Gemini AI API Key
+    load_dotenv()
+    genai.configure(api_key=os.environ['GEMINI_API_KEY'])
+
     while True:
         play_game()
         play_again = input("Do you want to play again? (y/n): ").lower()
