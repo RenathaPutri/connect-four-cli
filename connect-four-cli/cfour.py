@@ -51,7 +51,7 @@ def check_winner(board, player):
     return False
 
 def ai_move(board, difficulty):
-    model = genai.GenerativeModel("gemini-pro")
+    model = genai.GenerativeModel("gemini-1.5-pro")
     available_moves = [col for col in range(7) if board[0][col] == " "]
     if difficulty == "easy":
         return random.choice(available_moves)
